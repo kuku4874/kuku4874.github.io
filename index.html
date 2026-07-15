@@ -108,19 +108,6 @@
   .arc-text{opacity:0;animation:fadeIn .7s ease forwards}
   @keyframes fadeIn{to{opacity:1}}
 
-  .arc-planet{opacity:0;animation:planetAppear .8s ease 1.35s forwards}
-  .arc-planet-glow{fill:currentColor;opacity:.34;filter:blur(1.2px)}
-  .arc-planet-disc{stroke:rgba(255,255,255,.86);stroke-width:1.2;
-    filter:drop-shadow(0 0 8px currentColor) drop-shadow(0 0 18px currentColor)}
-  .arc-planet.mars{color:#ff6b45}
-  .arc-planet.venus{color:#ffd166;animation-delay:1.75s}
-  .arc-planet.earth{color:#57d7ff;animation-delay:2s}
-  .planet-crater{fill:rgba(100,31,24,.42)}
-  .planet-mark,.planet-band{fill:none;stroke:rgba(255,245,210,.55);stroke-width:1.1;stroke-linecap:round}
-  .earth-land{fill:#34d399;stroke:rgba(255,255,255,.28);stroke-width:.35}
-  @keyframes planetAppear{to{opacity:1}}
-
-
   /* ===== HERO TEXT ===== */
   .copy{
     position:absolute;z-index:50;bottom:96px;left:48px;max-width:448px;
@@ -157,7 +144,6 @@
   .cta:hover .shine{transition:transform .7s ease;transform:translateX(100%)}
 
   @media(prefers-reduced-motion:reduce){
-    .arc-planet{display:none}
     .hero-rise,.nav-drop,.nav-mobile,.arc-line,.arc-dot,.arc-ring,.arc-text,.bg-base{
       animation:none!important;opacity:1!important;transform:none!important;
       stroke-dashoffset:0!important;filter:none!important;
@@ -166,7 +152,6 @@
 
   /* ===== SOCIAL ICONS ===== */
   .socials{display:flex;gap:14px;margin-top:26px}
-  button.soc{appearance:none;-webkit-appearance:none;font:inherit;padding:0;margin:0;color:inherit}
   .soc{display:flex;align-items:center;justify-content:center;width:48px;height:48px;border-radius:9999px;
     background:#fff;box-shadow:0 10px 22px -8px rgba(0,0,0,.45);transition:transform .2s,box-shadow .2s}
   .soc:hover{transform:translateY(-3px) scale(1.06);box-shadow:0 16px 30px -10px rgba(0,0,0,.55)}
@@ -365,7 +350,27 @@
   .bg-reveal{
     -webkit-mask-image:radial-gradient(circle 66px at var(--mx,-999px) var(--my,-999px),#000 40%,rgba(0,0,0,.4) 74%,transparent 100%) !important;
     mask-image:radial-gradient(circle 66px at var(--mx,-999px) var(--my,-999px),#000 40%,rgba(0,0,0,.4) 74%,transparent 100%) !important}
-  
+  .hf-bloom,.xp-aurora i,.w3-aurora i{will-change:transform}
+  .xp-stars{will-change:auto}
+  /* ===== MOBILE COLOR CLEANUP ===== */
+  @media(max-width:767px){
+    /* drop the blend-mode glow blobs that render as harsh patches on phones */
+    .hf-bloom{display:none !important}
+    .xp-aurora,.w3-aurora{opacity:.3 !important}
+    /* readable hero text: darken the bottom where the copy sits */
+    .hero-vignette{background:linear-gradient(to top,rgba(5,7,14,.82),rgba(5,7,14,.35) 32%,transparent 58%) !important}
+    .copy h1{text-shadow:0 0 8px rgba(125,211,252,.4) !important;animation:none !important}
+    .copy .eyebrow{text-shadow:none !important;color:#e5e7eb !important}
+    .copy p{color:#f1f5f9 !important}
+    /* calmer neon */
+    .neon-bar,.neon-bar-b{box-shadow:none !important;height:2px !important;opacity:.75}
+    .nav-pill{box-shadow:0 0 12px -6px rgba(125,211,252,.45) !important}
+    .xp-title,.w3-title{filter:none !important}
+    .xp-stat b{filter:none !important}
+    .xp-card,.w3-card{animation:none !important}
+    .soc{box-shadow:0 6px 16px -6px rgba(0,0,0,.5) !important}
+  }
+
   /* ===== COOL FX ===== */
   .neon-bar-b{position:fixed;bottom:0;left:0;right:0;height:3px;z-index:65;pointer-events:none;
     background:linear-gradient(90deg,#a855f7,#3b82f6,#22d3ee,#a855f7);background-size:300% 100%;
@@ -399,50 +404,7 @@
     transform:scaleX(0);transform-origin:center;transition:transform .25s}
   .nav-link{position:relative}
   .nav-link:hover::after,.nav-link.active::after{transform:scaleX(1)}
-  @media(prefers-reduced-motion:reduce){.arc-planet{display:none}.neon-bar,.neon-bar-b,.hf-bloom,.hf-mote,.copy::before,.xp-card,.w3-card{animation:none}.hf-mote{opacity:.5}.copy h1{animation:none !important}}
-
-
-
-  .socials{overflow:visible;position:relative;z-index:60;flex-wrap:wrap;align-items:flex-start}
-  .soc-cluster{display:flex;flex-direction:column;align-items:center;gap:8px;position:relative;z-index:70}
-  .soc-cluster > .soc{cursor:pointer;border:0}
-  .soc-panel{display:none;position:absolute;left:50%;top:calc(100% + 8px);transform:translateX(-50%);
-    min-width:260px;padding:8px;border-radius:14px;z-index:100;
-    background:rgba(8,12,22,.98);border:1px solid rgba(125,211,252,.45);
-    box-shadow:0 0 28px -6px rgba(56,189,248,.65),0 18px 40px -16px rgba(0,0,0,.9)}
-  .soc-cluster.open .soc-panel{display:flex;flex-direction:column;gap:4px}
-  .soc-panel a{display:flex;flex-direction:column;gap:2px;padding:10px 12px;border-radius:10px;text-decoration:none;
-    color:#fff;font-family:'JetBrains Mono',monospace}
-  .soc-panel a:hover{background:rgba(125,211,252,.14)}
-  .soc-panel .em-label{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#7dd3fc}
-  .soc-panel .em-addr{font-size:12.5px;color:rgba(255,255,255,.9);word-break:break-all}
-  .copy{overflow:visible}
-  /* keep panels usable even if hero clips: portal mode via fixed */
-  .soc-panel.portal{position:fixed;transform:none}
-
-
-  /* ===== PERF ===== */
-  .copy h1{animation:none !important}
-  .xp-card,.w3-card{animation:none !important}
-  .neon-bar,.neon-bar-b{animation:none !important;background-position:0 0 !important}
-  .hf-bloom{animation:none !important}
-  .hf-mote{animation:none !important;opacity:.35}
-  .copy::before{animation:none !important}
-  .xp-grid-bg{animation:none !important}
-  .w3-title{animation:none !important}
-  .w3-dots span{animation:none !important}
-  .xp,.w3{content-visibility:auto;contain-intrinsic-size:1px 900px}
-  .xp-aurora,.w3-aurora,.hf-bloom{filter:blur(40px) !important}
-  .xp-stat,.xp-card,.w3-card{backdrop-filter:none !important;-webkit-backdrop-filter:none !important}
-  @media (max-width:767px){
-    .hero-fx,.xp-stars,.xp-aurora,.w3-aurora,.w3-spark,.hf-mote{display:none !important}
-    .arc-planet{display:none !important}
-    .bg-reveal{display:none !important}
-    .xp-aurora,.w3-aurora{filter:none !important}
-  }
-  @media (prefers-reduced-motion:reduce){
-    .arc-planet animateMotion{display:none}
-  }
+  @media(prefers-reduced-motion:reduce){.neon-bar,.neon-bar-b,.hf-bloom,.hf-mote,.copy::before,.xp-card,.w3-card{animation:none}.hf-mote{opacity:.5}.copy h1{animation:none !important}}
 </style>
 </head>
 <body>
@@ -458,7 +420,7 @@
     <a class="i18n nav-link" href="#experience" data-zh="工作经历" data-ko="경력">Experience</a>
     <a class="nav-link" href="#web3">Web3</a>
     <a class="i18n nav-link" href="mailto:muhammad@htx-inc.com" data-zh="联系" data-ko="연락처">Contact</a>
-    <a class="i18n nav-cta" href="https://x.com/faithpoloniex" target="_blank" rel="noopener" style="text-decoration:none;display:inline-block" data-zh="联系我" data-ko="연결">Connect</a>
+    <a class="i18n nav-cta" href="https://www.linkedin.com/in/muhammad-9b4b77214" target="_blank" rel="noopener" style="text-decoration:none;display:inline-block" data-zh="联系我" data-ko="연결">Connect</a>
   </div>
   <button class="nav-mobile" id="menuBtn" aria-label="Menu">
     <svg id="iconMenu" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg>
@@ -467,7 +429,7 @@
 </nav>
 <div class="mobile-menu" id="mobileMenu">
   <a href="#" class="i18n" data-zh="简介" data-ko="프로필">Profile</a><a href="#experience" class="i18n" data-zh="工作经历" data-ko="경력">Experience</a><a href="#web3">Web3</a><a href="mailto:muhammad@htx-inc.com" class="i18n" data-zh="联系" data-ko="연락처">Contact</a>
-  <a class="i18n m-cta" href="https://x.com/faithpoloniex" target="_blank" rel="noopener" style="text-decoration:none" data-zh="联系我" data-ko="연결">Connect</a>
+  <a class="i18n m-cta" href="https://www.linkedin.com/in/muhammad-9b4b77214" target="_blank" rel="noopener" style="text-decoration:none" data-zh="联系我" data-ko="연결">Connect</a>
 </div>
 
 <section class="hero" id="hero">
@@ -483,7 +445,7 @@
 
   <div class="bg-base"></div>
   <div class="bg-reveal" id="reveal"></div>
-  <div class="hero-fx"><span class="hf-bloom b1"></span><span class="hf-bloom b2"></span></div><div class="hero-vignette"></div>
+  <div class="hero-fx"><span class="hf-bloom b1"></span><span class="hf-bloom b2"></span><span class="hf-mote m1"></span><span class="hf-mote m2"></span><span class="hf-mote m3"></span><span class="hf-mote m4"></span><span class="hf-mote m5"></span><span class="hf-mote m6"></span></div><div class="hero-vignette"></div>
 
   <div class="stats">
     <svg viewBox="0 0 380 700" preserveAspectRatio="xMaxYMid meet" xmlns="http://www.w3.org/2000/svg">
@@ -497,62 +459,29 @@
         <linearGradient id="ag2" gradientUnits="userSpaceOnUse" x1="336.3" y1="188.7" x2="32.1" y2="737.5">
           <stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".22" stop-color="#fff" stop-opacity=".5"/><stop offset=".55" stop-color="#fff" stop-opacity=".5"/><stop offset=".85" stop-color="#fff" stop-opacity=".1"/><stop offset="1" stop-color="#fff" stop-opacity="0"/>
         </linearGradient>
-      
-        <radialGradient id="planetMars" cx="35%" cy="28%" r="70%">
-          <stop offset="0" stop-color="#ffb08a"/><stop offset=".45" stop-color="#e65f3d"/><stop offset="1" stop-color="#7f261c"/>
-        </radialGradient>
-        <radialGradient id="planetVenus" cx="34%" cy="26%" r="72%">
-          <stop offset="0" stop-color="#fff0ad"/><stop offset=".48" stop-color="#e9ad55"/><stop offset="1" stop-color="#8d5524"/>
-        </radialGradient>
-        <radialGradient id="planetEarth" cx="32%" cy="25%" r="72%">
-          <stop offset="0" stop-color="#c7f9ff"/><stop offset=".42" stop-color="#2f9cff"/><stop offset="1" stop-color="#103d99"/>
-        </radialGradient>
-</defs>
+      </defs>
 
       <path class="arc-line" style="--len:622;animation-delay:.4s" stroke="url(#ag0)" d="M -121.5 -29.8 A 330 330 0 0 1 207.2 391.0"/>
       <path class="arc-line" style="--len:800;animation-delay:.62s" stroke="url(#ag1)" d="M 110.9 -27.5 A 395 395 0 0 1 87.5 642.1"/>
       <path class="arc-line" style="--len:690;animation-delay:.84s" stroke="url(#ag2)" d="M 336.3 188.7 A 460 460 0 0 1 32.1 737.5"/>
-      <g class="arc-planet mars">
-        <title>Mars</title>
-        <animateMotion dur="8.8s" begin="1.2s" repeatCount="indefinite" path="M -121.5 -29.8 A 330 330 0 0 1 207.2 391.0"/>
-        <circle class="arc-planet-glow" r="14"/>
-        <circle class="arc-planet-disc" r="6.4" fill="url(#planetMars)"/>
-        <circle class="planet-crater" cx="-2.4" cy="-1.7" r="1.1"/>
-        <circle class="planet-crater" cx="2.2" cy="1.3" r="1.4"/>
-        <path class="planet-mark" d="M-5.1 2.9c2.1-1 4-.8 6.4.3"/>
-      </g>
-      <g class="arc-planet venus">
-        <title>Sun</title>
-        <animateMotion dur="11.5s" begin="2.1s" repeatCount="indefinite" path="M 110.9 -27.5 A 395 395 0 0 1 87.5 642.1"/>
-        <circle class="arc-planet-glow" r="13"/>
-        <circle class="arc-planet-disc" r="6" fill="url(#planetVenus)"/>
-        <path class="planet-band" d="M-5.2-1.8c2.4 1 5.2 1 10.4-.2"/>
-        <path class="planet-band" d="M-5.8 1.7c3.2-1.1 6.1-.8 10.7.5"/>
-      </g>
-      <g class="arc-planet earth">
-        <title>Earth</title>
-        <animateMotion dur="13.2s" begin="1.6s" repeatCount="indefinite" path="M 336.3 188.7 A 460 460 0 0 1 32.1 737.5"/>
-        <circle class="arc-planet-glow" r="15"/>
-        <circle class="arc-planet-disc" r="6.8" fill="url(#planetEarth)"/>
-        <path class="earth-land" d="M-4.5-1.9c1.3-2 3.5-2.2 4.2-.7.6 1.4-.5 2.1-1.9 2.6-1.2.4-1.3 1.8-2.9 1.2-1.2-.5-.5-2.1.6-3.1Z"/>
-        <path class="earth-land" d="M1.3.4c1.8-.8 3.7.1 3.8 1.8.1 1.6-1.5 2.7-3.2 2.1-1.5-.6-2.3-2.9-.6-3.9Z"/>
-      </g>
-
 
       <!-- 10+ YEARS REAL -->
-    
-      <!-- 180+ PARTNERSHIPS -->
+      <circle class="arc-dot" style="animation-delay:1.3s" cx="119.2" cy="62.6" r="3.4" fill="#fff"/>
+      <circle class="arc-ring" style="animation-delay:1.6s" cx="119.2" cy="62.6" r="7" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1"/>
       <text class="arc-text" style="animation-delay:1.45s" x="135.2" y="66.6" fill="#fff" font-size="32" font-weight="700" letter-spacing="-1">180<tspan font-size="19" dy="-10">+</tspan></text>
       <text class="i18n arc-text" style="animation-delay:1.6s" x="137.2" y="84.6" fill="#fff" font-size="8.5" font-weight="600" letter-spacing="2" opacity=".8" data-zh="合作伙伴" data-ko="파트너십">PARTNERSHIPS</text>
 
-      <!-- 500+ PER CYCLE -->
+      <!-- 40+ USE FORMS -->
+      <circle class="arc-dot" style="animation-delay:1.52s" cx="284.8" cy="313.8" r="3.4" fill="#fff"/>
+      <circle class="arc-ring" style="animation-delay:1.82s" cx="284.8" cy="313.8" r="7" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1"/>
       <text class="arc-text" style="animation-delay:1.67s" x="300.8" y="317.8" fill="#fff" font-size="32" font-weight="700" letter-spacing="-1">500<tspan font-size="19" dy="-10">+</tspan></text>
       <text class="i18n arc-text" style="animation-delay:1.82s" x="302.8" y="335.8" fill="#fff" font-size="8.5" font-weight="600" letter-spacing="2" opacity=".8" data-zh="每周期" data-ko="주기당">PER CYCLE</text>
 
-      <!-- 1st KPI RANK -->
+      <!-- 95% REPEAT MEMBERS -->
+      <circle class="arc-dot" style="animation-delay:1.74s" cx="220.9" cy="619.5" r="3.4" fill="#fff"/>
+      <circle class="arc-ring" style="animation-delay:2.04s" cx="220.9" cy="619.5" r="7" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1"/>
       <text class="arc-text" style="animation-delay:1.89s" x="236.9" y="623.5" fill="#fff" font-size="32" font-weight="700" letter-spacing="-1">1<tspan font-size="19" dy="-10">st</tspan></text>
       <text class="i18n arc-text" style="animation-delay:2.04s" x="238.9" y="641.5" fill="#fff" font-size="8.5" font-weight="600" letter-spacing="2" opacity=".8" data-zh="KPI 排名 FY24–25" data-ko="KPI 순위 FY24–25">KPI RANK FY24–25</text>
-
     </svg>
   </div>
 
@@ -560,7 +489,7 @@
     <div class="i18n eyebrow hero-rise" style="animation-delay:.15s" data-zh="业务发展主管 · <i>HTX / Poloniex</i>" data-ko="사업 개발 총괄 · <i>HTX / Poloniex</i>">Head of Business Development · <i>HTX / Poloniex</i></div>
     <h1 class="hero-rise" style="animation-delay:.3s">Muhammad</h1>
     <p class="i18n hero-rise" style="animation-delay:.5s" data-zh="资深商务拓展负责人，5 年以上商业岗位经验，2 年以上在顶级交易所规模主导全球 Web3 合作——已达成 180+ 合作，公司全员 KPI 排名第一。" data-ko="5년 이상의 상업 경력과 2년 이상 최상위 거래소 규모의 글로벌 Web3 파트너십을 이끈 사업 개발 리더 — 180개 이상의 파트너십 체결, 전사 KPI 1위.">BD leader with 5+ years in commercial roles and 2+ years leading global Web3 partnerships at tier-one exchange scale — 180+ partnerships closed and ranked #1 on company-wide KPIs.</p>
-    <div class="socials hero-rise" id="contact" style="animation-delay:.7s"><a class="soc" href="https://www.linkedin.com/in/muhammad-9b4b77214" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="#0A66C2" xmlns="http://www.w3.org/2000/svg"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.852 3.37-1.852 3.601 0 4.267 2.37 4.267 5.455v6.288zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.225 0z"/></svg></a><div class="soc-cluster" id="emailCluster"><button type="button" class="soc" id="emailBtn" aria-label="Email" aria-haspopup="true" aria-expanded="false"><svg viewBox="0 0 24 24" fill="#ea4335" xmlns="http://www.w3.org/2000/svg"><path d="M2 6a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v.35l-10 5.6L2 6.35V6Zm0 2.64V18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8.64l-9.51 5.33a1 1 0 0 1-.98 0L2 8.64Z"/></svg></button><div class="soc-panel" id="emailPanel" role="menu"><a role="menuitem" href="mailto:muhammad@htx-inc.com"><span class="em-label">Official</span><span class="em-addr">muhammad@htx-inc.com</span></a><a role="menuitem" href="mailto:muhammadhuzaifa4874@gmail.com"><span class="em-label">Personal inquiries</span><span class="em-addr">muhammadhuzaifa4874@gmail.com</span></a></div></div><a class="soc" href="https://discord.com/users/fate_6996" target="_blank" rel="noopener" aria-label="Discord"><svg viewBox="0 0 24 24" fill="#5865F2" xmlns="http://www.w3.org/2000/svg"><path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189z"/></svg></a><div class="soc-cluster" id="tgCluster"><button type="button" class="soc" id="tgBtn" aria-label="Telegram" aria-haspopup="true" aria-expanded="false"><svg viewBox="0 0 24 24" fill="#229ED9" xmlns="http://www.w3.org/2000/svg"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg></button><div class="soc-panel" id="tgPanel" role="menu"><a role="menuitem" href="https://t.me/htx_faith" target="_blank" rel="noopener"><span class="em-label">Work</span><span class="em-addr">@htx_faith</span></a><a role="menuitem" href="https://t.me/kk40400" target="_blank" rel="noopener"><span class="em-label">Personal</span><span class="em-addr">@kk40400</span></a></div></div><a class="soc" href="https://github.com/kuku4874" target="_blank" rel="noopener" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="#181717" xmlns="http://www.w3.org/2000/svg"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222 0 1.606-.014 2.898-.014 3.293 0 .322.216.694.825.576C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a></div>
+    <div class="socials hero-rise" id="contact" style="animation-delay:.7s"><a class="soc" href="https://www.linkedin.com/in/muhammad-9b4b77214" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="#0A66C2" xmlns="http://www.w3.org/2000/svg"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.852 3.37-1.852 3.601 0 4.267 2.37 4.267 5.455v6.288zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.225 0z"/></svg></a><a class="soc" href="https://x.com/" target="_blank" rel="noopener" aria-label="X (Twitter)"><svg viewBox="0 0 24 24" fill="#000000" xmlns="http://www.w3.org/2000/svg"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a><a class="soc" href="https://discord.com/users/fate_6996" target="_blank" rel="noopener" aria-label="Discord"><svg viewBox="0 0 24 24" fill="#5865F2" xmlns="http://www.w3.org/2000/svg"><path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189z"/></svg></a><a class="soc" href="https://t.me/kk40400" target="_blank" rel="noopener" aria-label="Telegram"><svg viewBox="0 0 24 24" fill="#26A5E4" xmlns="http://www.w3.org/2000/svg"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.96 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg></a><a class="soc" href="https://github.com/kuku4874" target="_blank" rel="noopener" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="#181717" xmlns="http://www.w3.org/2000/svg"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222 0 1.606-.014 2.898-.014 3.293 0 .322.216.694.825.576C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a><a class="soc" href="mailto:muhammad@htx-inc.com" aria-label="Email"><svg viewBox="0 0 24 24" fill="#ea4335" xmlns="http://www.w3.org/2000/svg"><path d="M2 6a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v.35l-10 5.6L2 6.35V6Zm0 2.64V18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8.64l-9.51 5.33a1 1 0 0 1-.98 0L2 8.64Z"/></svg></a></div>
   </div>
 
 </section>
@@ -658,124 +587,95 @@
 
 <script>
 (function(){
+  // mobile menu
   var btn=document.getElementById('menuBtn'),menu=document.getElementById('mobileMenu'),
       im=document.getElementById('iconMenu'),ix=document.getElementById('iconX');
-  if(btn&&menu){
-    btn.addEventListener('click',function(){
-      var open=menu.classList.toggle('open');
-      if(im) im.style.display=open?'none':'block';
-      if(ix) ix.style.display=open?'block':'none';
-    });
-    menu.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){
-      menu.classList.remove('open');
-      if(im) im.style.display='block';
-      if(ix) ix.style.display='none';
-    });});
-  }
+  btn.addEventListener('click',function(){
+    var open=menu.classList.toggle('open');
+    im.style.display=open?'none':'block';ix.style.display=open?'block':'none';
+  });
+  menu.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){
+    menu.classList.remove('open');im.style.display='block';ix.style.display='none';});});
 
-  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var mobile=window.matchMedia&&window.matchMedia('(max-width:767px)').matches;
-  var hero=document.getElementById('hero');
+  // ---- one rAF loop drives grid parallax + spotlight reveal ----
+  var mx=-999,my=-999;          // real cursor
+  var sx=-999,sy=-999;          // smoothed cursor (spotlight, lerp .1)
+  var gx=0,gy=0,gtx=0,gty=0;    // grid offset (lerp .06)
   var pattern=document.getElementById('grid');
   var reveal=document.getElementById('reveal');
-  var gridBg=document.querySelector('.grid-bg');
-  if(reduce||mobile||!hero||!reveal) return;
 
-  var mx=-999,my=-999,sx=-999,sy=-999,gx=0,gy=0,gtx=0,gty=0;
-  var rafId=0, running=false, heroVis=true, overHero=false;
+  var canvas=document.createElement('canvas');
+  var ctx=canvas.getContext('2d');
+  function resize(){canvas.width=window.innerWidth;canvas.height=window.innerHeight;}
+  resize();window.addEventListener('resize',resize);
 
-  function stop(){ if(running){ running=false; cancelAnimationFrame(rafId); rafId=0; } }
-  function near(a,b){ return Math.abs(a-b)<0.15; }
+  function onMove(e){
+    mx=e.clientX;my=e.clientY;
+    gtx=(e.clientX/window.innerWidth-0.5)*16;
+    gty=(e.clientY/window.innerHeight-0.5)*16;
+  }
+  window.addEventListener('mousemove',onMove);
+
+  var rafId;
   function frame(){
-    if(!running) return;
-    gx+=(gtx-gx)*0.08; gy+=(gty-gy)*0.08;
-    sx+=(mx-sx)*0.35; sy+=(my-sy)*0.35;
-    if(gridBg){ gridBg.style.transform='translate3d('+gx.toFixed(2)+'px,'+gy.toFixed(2)+'px,0)'; }
-    else if(pattern){ pattern.setAttribute('x',gx.toFixed(2)); pattern.setAttribute('y',gy.toFixed(2)); }
+    // grid parallax
+    gx+=(gtx-gx)*0.06;gy+=(gty-gy)*0.06;
+    pattern.setAttribute('x',gx.toFixed(2));pattern.setAttribute('y',gy.toFixed(2));
+
+    // spotlight (CSS gradient mask — no per-frame canvas encoding)
+    sx+=(mx-sx)*0.5;sy+=(my-sy)*0.5;
     reveal.style.setProperty('--mx', sx.toFixed(1)+'px');
     reveal.style.setProperty('--my', sy.toFixed(1)+'px');
-    var settled=near(sx,mx)&&near(sy,my)&&near(gx,gtx)&&near(gy,gty);
-    if(!overHero||!heroVis||settled){ stop(); return; }
+
     rafId=requestAnimationFrame(frame);
   }
-  function start(){ if(!running&&overHero&&heroVis){ running=true; rafId=requestAnimationFrame(frame); } }
-
-  hero.addEventListener('mousemove',function(e){
-    overHero=true;
-    mx=e.clientX; my=e.clientY;
-    gtx=(e.clientX/window.innerWidth-0.5)*10;
-    gty=(e.clientY/window.innerHeight-0.5)*10;
-    start();
-  },{passive:true});
-  hero.addEventListener('mouseleave',function(){ overHero=false; stop(); },{passive:true});
-
-  if('IntersectionObserver' in window){
-    new IntersectionObserver(function(es){
-      heroVis=es[0].isIntersecting;
-      if(!heroVis) stop();
-    },{threshold:0.05}).observe(hero);
-  }
+  rafId=requestAnimationFrame(frame);
+  window.addEventListener('beforeunload',function(){cancelAnimationFrame(rafId);});
 })();
 </script>
 <script>
 (function(){
+  // scroll reveal + cursor glow
   var cards=document.querySelectorAll('.xp-card');
   if('IntersectionObserver' in window){
     var io=new IntersectionObserver(function(es){es.forEach(function(e){
       if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.16});
     cards.forEach(function(c){io.observe(c);});
   } else { cards.forEach(function(c){c.classList.add('in');}); }
-
-  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var mobile=window.matchMedia&&window.matchMedia('(max-width:767px)').matches;
   cards.forEach(function(c){
-    if(reduce||mobile) return;
     c.addEventListener('mousemove',function(e){
       var r=c.getBoundingClientRect();
       c.style.setProperty('--mx',((e.clientX-r.left)/r.width*100)+'%');
       c.style.setProperty('--my',((e.clientY-r.top)/r.height*100)+'%');
-    },{passive:true});
+    });
   });
 
-  var cv=document.getElementById('xpStars'); if(!cv||reduce||mobile) {
-    if(cv) cv.style.display='none';
-    return;
-  }
-  var ctx=cv.getContext('2d',{alpha:true}), sec=document.getElementById('experience'), parts=[], raf=0, running=false;
-  if(!sec) return;
-  function size(){
-    var w=sec.clientWidth, h=sec.clientHeight;
-    if(cv.width!==w) cv.width=w;
-    if(cv.height!==h) cv.height=h;
-    build();
-  }
+  // floating particles
+  var cv=document.getElementById('xpStars'); if(!cv) return;
+  var ctx=cv.getContext('2d'), sec=document.getElementById('experience'), parts=[], raf;
+  function size(){cv.width=sec.offsetWidth;cv.height=sec.offsetHeight;build();}
   function build(){
-    parts=[]; var n=Math.min(22, Math.max(8, Math.round(cv.width*cv.height/90000)));
-    for(var i=0;i<n;i++) parts.push({x:Math.random()*cv.width,y:Math.random()*cv.height,
-      r:Math.random()*1.4+.3,s:Math.random()*.2+.04,t:Math.random()*6.28,
-      h:Math.random()<.5?'52,211,153':'34,211,238'});
+    parts=[]; var n=Math.min(70,Math.round(cv.width*cv.height/26000));
+    for(var i=0;i<n;i++){parts.push({x:Math.random()*cv.width,y:Math.random()*cv.height,
+      r:Math.random()*1.6+.4,s:Math.random()*.25+.05,t:Math.random()*6.28,
+      h:Math.random()<.5?'52,211,153':'34,211,238'});}
   }
   function draw(){
-    if(!running) return;
     ctx.clearRect(0,0,cv.width,cv.height);
-    for(var i=0;i<parts.length;i++){
-      var p=parts[i];
-      p.y-=p.s; p.t+=0.015; if(p.y<-4){p.y=cv.height+4;p.x=Math.random()*cv.width;}
-      ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,6.283);
-      ctx.fillStyle='rgba('+p.h+','+(0.28+0.28*Math.sin(p.t)).toFixed(2)+')';
-      ctx.fill();
+    for(var i=0;i<parts.length;i++){var p=parts[i];
+      p.y-=p.s; p.t+=0.02; if(p.y<-4){p.y=cv.height+4;p.x=Math.random()*cv.width;}
+      var a=0.35+0.35*Math.sin(p.t);
+      ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,6.283);
+      ctx.fillStyle='rgba('+p.h+','+a.toFixed(2)+')';ctx.fill();
     }
     raf=requestAnimationFrame(draw);
   }
-  function start(){ if(!running){ running=true; raf=requestAnimationFrame(draw); } }
-  function stop(){ running=false; cancelAnimationFrame(raf); raf=0; }
+  var vis=true;
   if('IntersectionObserver' in window){
-    new IntersectionObserver(function(es){
-      if(es[0].isIntersecting) start(); else stop();
-    },{threshold:0.05}).observe(sec);
+    new IntersectionObserver(function(es){vis=es[0].isIntersecting;
+      if(vis){raf=requestAnimationFrame(draw);}else{cancelAnimationFrame(raf);} },{threshold:0}).observe(sec);
   }
-  var rt; window.addEventListener('resize',function(){ clearTimeout(rt); rt=setTimeout(size,150); },{passive:true});
-  size();
+  window.addEventListener('resize',size); size(); raf=requestAnimationFrame(draw);
 })();
 </script>
 <script>
@@ -801,98 +701,5 @@
   document.addEventListener('click',function(){ root.classList.remove('open'); btn.setAttribute('aria-expanded',false); });
 })();
 </script>
-
-
-
-<script>
-(function(){
-  var hero=document.getElementById('hero');
-  if(!hero) return;
-  var svg=hero.querySelector('.arcs svg') || hero.querySelector('svg.arcs') || hero.querySelector('.arcs > svg');
-  if(!svg || !svg.pauseAnimations) {
-    svg=null;
-    var all=hero.querySelectorAll('svg');
-    for(var i=0;i<all.length;i++){ if(all[i].querySelector('animateMotion')){ svg=all[i]; break; } }
-  }
-  if(!svg || !svg.pauseAnimations) return;
-  if('IntersectionObserver' in window){
-    new IntersectionObserver(function(es){
-      try{ if(es[0].isIntersecting) svg.unpauseAnimations(); else svg.pauseAnimations(); }catch(e){}
-    },{threshold:0.05}).observe(hero);
-  }
-})();
-</script>
-
-<script>
-(function(){
-  function portalOpen(cluster, btn, panel){
-    var r=btn.getBoundingClientRect();
-    var w=Math.max(280, panel.offsetWidth||280);
-    var left=Math.min(Math.max(10, r.left + r.width/2 - w/2), window.innerWidth - w - 10);
-    var top=r.bottom + 10;
-    if(top + 130 > window.innerHeight){ top=Math.max(10, r.top - 130); }
-    panel.classList.add('portal');
-    document.body.appendChild(panel);
-    panel.style.left=left+'px';
-    panel.style.top=top+'px';
-    panel.style.minWidth=w+'px';
-    panel.style.display='flex';
-    panel.style.flexDirection='column';
-    panel.style.gap='4px';
-  }
-  function portalClose(cluster, panel){
-    panel.classList.remove('portal');
-    panel.style.left='';
-    panel.style.top='';
-    panel.style.minWidth='';
-    panel.style.display='';
-    panel.style.flexDirection='';
-    panel.style.gap='';
-    if(panel.parentElement!==cluster){ cluster.appendChild(panel); }
-  }
-  function wire(clusterId, btnId, panelId, otherClusterId){
-    var cluster=document.getElementById(clusterId);
-    var btn=document.getElementById(btnId);
-    var panel=document.getElementById(panelId);
-    var other=document.getElementById(otherClusterId);
-    if(!cluster||!btn||!panel) return;
-    function close(){
-      cluster.classList.remove('open');
-      btn.setAttribute('aria-expanded','false');
-      portalClose(cluster, panel);
-    }
-    function closeOther(){
-      if(!other||!other.classList.contains('open')) return;
-      other.classList.remove('open');
-      var ob=other.querySelector('.soc');
-      var op=other.querySelector('.soc-panel');
-      if(ob) ob.setAttribute('aria-expanded','false');
-      if(op) portalClose(other, op);
-    }
-    btn.addEventListener('click', function(e){
-      e.preventDefault();
-      e.stopPropagation();
-      var willOpen=!cluster.classList.contains('open');
-      closeOther();
-      if(willOpen){
-        cluster.classList.add('open');
-        btn.setAttribute('aria-expanded','true');
-        portalOpen(cluster, btn, panel);
-      } else {
-        close();
-      }
-    });
-    panel.addEventListener('click', function(e){ e.stopPropagation(); });
-    document.addEventListener('click', close);
-    document.addEventListener('keydown', function(e){ if(e.key==='Escape') close(); });
-    window.addEventListener('resize', function(){
-      if(cluster.classList.contains('open')) portalOpen(cluster, btn, panel);
-    });
-  }
-  wire('emailCluster','emailBtn','emailPanel','tgCluster');
-  wire('tgCluster','tgBtn','tgPanel','emailCluster');
-})();
-</script>
-
 </body>
 </html>
