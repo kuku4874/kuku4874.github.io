@@ -435,10 +435,24 @@
   .xp-aurora,.w3-aurora,.hf-bloom{filter:blur(40px) !important}
   .xp-stat,.xp-card,.w3-card{backdrop-filter:none !important;-webkit-backdrop-filter:none !important}
   @media (max-width:767px){
-    .hero-fx,.xp-stars,.xp-aurora,.w3-aurora,.w3-spark,.hf-mote{display:none !important}
-    .arc-planet{display:none !important}
-    .bg-reveal{display:none !important}
+    /* keep dual Email/TG + planets; only drop harsh phone overlays */
+    .hf-bloom,.hf-mote,.xp-stars,.xp-aurora,.w3-aurora,.w3-spark,.bg-reveal{display:none !important}
     .xp-aurora,.w3-aurora{filter:none !important}
+    /* readable hero text over orange jacket */
+    .hero-vignette{background:linear-gradient(to top,rgba(5,7,14,.88),rgba(5,7,14,.42) 36%,transparent 62%) !important}
+    .copy{bottom:40px;left:18px;max-width:min(320px,calc(100vw - 36px));z-index:55}
+    .copy h1{text-shadow:0 0 8px rgba(125,211,252,.35),0 2px 14px rgba(0,0,0,.75) !important;animation:none !important}
+    .copy .eyebrow{text-shadow:0 1px 10px rgba(0,0,0,.75) !important;color:#e5e7eb !important}
+    .copy p{color:#f1f5f9 !important;text-shadow:0 1px 10px rgba(0,0,0,.7)}
+    .copy::before{display:none !important}
+    /* calmer neon */
+    .neon-bar,.neon-bar-b{box-shadow:none !important;height:2px !important;opacity:.7}
+    .nav-pill{box-shadow:0 0 12px -6px rgba(125,211,252,.4) !important}
+    .xp-title,.w3-title,.xp-stat b{filter:none !important}
+    .xp-card,.w3-card{animation:none !important}
+    .soc{box-shadow:0 6px 16px -6px rgba(0,0,0,.55) !important}
+    .socials{gap:10px;margin-top:20px;flex-wrap:wrap;max-width:100%}
+    .arc-planet{display:block !important;opacity:.95}
   }
   @media (prefers-reduced-motion:reduce){
     .arc-planet animateMotion{display:none}
