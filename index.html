@@ -422,6 +422,29 @@
   /* keep panels usable even if hero clips: portal mode via fixed */
   .soc-panel.portal{position:fixed;transform:none}
 
+
+  /* ===== PERF ===== */
+  .copy h1{animation:none !important}
+  .xp-card,.w3-card{animation:none !important}
+  .neon-bar,.neon-bar-b{animation:none !important;background-position:0 0 !important}
+  .hf-bloom{animation:none !important}
+  .hf-mote{animation:none !important;opacity:.35}
+  .copy::before{animation:none !important}
+  .xp-grid-bg{animation:none !important}
+  .w3-title{animation:none !important}
+  .w3-dots span{animation:none !important}
+  .xp,.w3{content-visibility:auto;contain-intrinsic-size:1px 900px}
+  .xp-aurora,.w3-aurora,.hf-bloom{filter:blur(40px) !important}
+  .xp-stat,.xp-card,.w3-card{backdrop-filter:none !important;-webkit-backdrop-filter:none !important}
+  @media (max-width:767px){
+    .hero-fx,.xp-stars,.xp-aurora,.w3-aurora,.w3-spark,.hf-mote{display:none !important}
+    .arc-planet{display:none !important}
+    .bg-reveal{display:none !important}
+    .xp-aurora,.w3-aurora{filter:none !important}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .arc-planet animateMotion{display:none}
+  }
 </style>
 </head>
 <body>
@@ -462,7 +485,7 @@
 
   <div class="bg-base"></div>
   <div class="bg-reveal" id="reveal"></div>
-  <div class="hero-fx"><span class="hf-bloom b1"></span><span class="hf-bloom b2"></span><span class="hf-mote m1"></span><span class="hf-mote m2"></span><span class="hf-mote m3"></span><span class="hf-mote m4"></span><span class="hf-mote m5"></span><span class="hf-mote m6"></span></div><div class="hero-vignette"></div>
+  <div class="hero-fx"><span class="hf-bloom b1"></span><span class="hf-bloom b2"></span></div><div class="hero-vignette"></div>
 
   <div class="stats">
     <svg viewBox="0 0 380 700" preserveAspectRatio="xMaxYMid meet" xmlns="http://www.w3.org/2000/svg">
@@ -637,95 +660,124 @@
 
 <script>
 (function(){
-  // mobile menu
   var btn=document.getElementById('menuBtn'),menu=document.getElementById('mobileMenu'),
       im=document.getElementById('iconMenu'),ix=document.getElementById('iconX');
-  btn.addEventListener('click',function(){
-    var open=menu.classList.toggle('open');
-    im.style.display=open?'none':'block';ix.style.display=open?'block':'none';
-  });
-  menu.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){
-    menu.classList.remove('open');im.style.display='block';ix.style.display='none';});});
+  if(btn&&menu){
+    btn.addEventListener('click',function(){
+      var open=menu.classList.toggle('open');
+      if(im) im.style.display=open?'none':'block';
+      if(ix) ix.style.display=open?'block':'none';
+    });
+    menu.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){
+      menu.classList.remove('open');
+      if(im) im.style.display='block';
+      if(ix) ix.style.display='none';
+    });});
+  }
 
-  // ---- one rAF loop drives grid parallax + spotlight reveal ----
-  var mx=-999,my=-999;          // real cursor
-  var sx=-999,sy=-999;          // smoothed cursor (spotlight, lerp .1)
-  var gx=0,gy=0,gtx=0,gty=0;    // grid offset (lerp .06)
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var mobile=window.matchMedia&&window.matchMedia('(max-width:767px)').matches;
+  var hero=document.getElementById('hero');
   var pattern=document.getElementById('grid');
   var reveal=document.getElementById('reveal');
+  var gridBg=document.querySelector('.grid-bg');
+  if(reduce||mobile||!hero||!reveal) return;
 
-  var canvas=document.createElement('canvas');
-  var ctx=canvas.getContext('2d');
-  function resize(){canvas.width=window.innerWidth;canvas.height=window.innerHeight;}
-  resize();window.addEventListener('resize',resize);
+  var mx=-999,my=-999,sx=-999,sy=-999,gx=0,gy=0,gtx=0,gty=0;
+  var rafId=0, running=false, heroVis=true, overHero=false;
 
-  function onMove(e){
-    mx=e.clientX;my=e.clientY;
-    gtx=(e.clientX/window.innerWidth-0.5)*16;
-    gty=(e.clientY/window.innerHeight-0.5)*16;
-  }
-  window.addEventListener('mousemove',onMove);
-
-  var rafId;
+  function stop(){ if(running){ running=false; cancelAnimationFrame(rafId); rafId=0; } }
+  function near(a,b){ return Math.abs(a-b)<0.15; }
   function frame(){
-    // grid parallax
-    gx+=(gtx-gx)*0.06;gy+=(gty-gy)*0.06;
-    pattern.setAttribute('x',gx.toFixed(2));pattern.setAttribute('y',gy.toFixed(2));
-
-    // spotlight (CSS gradient mask — no per-frame canvas encoding)
-    sx+=(mx-sx)*0.5;sy+=(my-sy)*0.5;
+    if(!running) return;
+    gx+=(gtx-gx)*0.08; gy+=(gty-gy)*0.08;
+    sx+=(mx-sx)*0.35; sy+=(my-sy)*0.35;
+    if(gridBg){ gridBg.style.transform='translate3d('+gx.toFixed(2)+'px,'+gy.toFixed(2)+'px,0)'; }
+    else if(pattern){ pattern.setAttribute('x',gx.toFixed(2)); pattern.setAttribute('y',gy.toFixed(2)); }
     reveal.style.setProperty('--mx', sx.toFixed(1)+'px');
     reveal.style.setProperty('--my', sy.toFixed(1)+'px');
-
+    var settled=near(sx,mx)&&near(sy,my)&&near(gx,gtx)&&near(gy,gty);
+    if(!overHero||!heroVis||settled){ stop(); return; }
     rafId=requestAnimationFrame(frame);
   }
-  rafId=requestAnimationFrame(frame);
-  window.addEventListener('beforeunload',function(){cancelAnimationFrame(rafId);});
+  function start(){ if(!running&&overHero&&heroVis){ running=true; rafId=requestAnimationFrame(frame); } }
+
+  hero.addEventListener('mousemove',function(e){
+    overHero=true;
+    mx=e.clientX; my=e.clientY;
+    gtx=(e.clientX/window.innerWidth-0.5)*10;
+    gty=(e.clientY/window.innerHeight-0.5)*10;
+    start();
+  },{passive:true});
+  hero.addEventListener('mouseleave',function(){ overHero=false; stop(); },{passive:true});
+
+  if('IntersectionObserver' in window){
+    new IntersectionObserver(function(es){
+      heroVis=es[0].isIntersecting;
+      if(!heroVis) stop();
+    },{threshold:0.05}).observe(hero);
+  }
 })();
 </script>
 <script>
 (function(){
-  // scroll reveal + cursor glow
   var cards=document.querySelectorAll('.xp-card');
   if('IntersectionObserver' in window){
     var io=new IntersectionObserver(function(es){es.forEach(function(e){
       if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.16});
     cards.forEach(function(c){io.observe(c);});
   } else { cards.forEach(function(c){c.classList.add('in');}); }
+
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var mobile=window.matchMedia&&window.matchMedia('(max-width:767px)').matches;
   cards.forEach(function(c){
+    if(reduce||mobile) return;
     c.addEventListener('mousemove',function(e){
       var r=c.getBoundingClientRect();
       c.style.setProperty('--mx',((e.clientX-r.left)/r.width*100)+'%');
       c.style.setProperty('--my',((e.clientY-r.top)/r.height*100)+'%');
-    });
+    },{passive:true});
   });
 
-  // floating particles
-  var cv=document.getElementById('xpStars'); if(!cv) return;
-  var ctx=cv.getContext('2d'), sec=document.getElementById('experience'), parts=[], raf;
-  function size(){cv.width=sec.offsetWidth;cv.height=sec.offsetHeight;build();}
+  var cv=document.getElementById('xpStars'); if(!cv||reduce||mobile) {
+    if(cv) cv.style.display='none';
+    return;
+  }
+  var ctx=cv.getContext('2d',{alpha:true}), sec=document.getElementById('experience'), parts=[], raf=0, running=false;
+  if(!sec) return;
+  function size(){
+    var w=sec.clientWidth, h=sec.clientHeight;
+    if(cv.width!==w) cv.width=w;
+    if(cv.height!==h) cv.height=h;
+    build();
+  }
   function build(){
-    parts=[]; var n=Math.min(70,Math.round(cv.width*cv.height/26000));
-    for(var i=0;i<n;i++){parts.push({x:Math.random()*cv.width,y:Math.random()*cv.height,
-      r:Math.random()*1.6+.4,s:Math.random()*.25+.05,t:Math.random()*6.28,
-      h:Math.random()<.5?'52,211,153':'34,211,238'});}
+    parts=[]; var n=Math.min(22, Math.max(8, Math.round(cv.width*cv.height/90000)));
+    for(var i=0;i<n;i++) parts.push({x:Math.random()*cv.width,y:Math.random()*cv.height,
+      r:Math.random()*1.4+.3,s:Math.random()*.2+.04,t:Math.random()*6.28,
+      h:Math.random()<.5?'52,211,153':'34,211,238'});
   }
   function draw(){
+    if(!running) return;
     ctx.clearRect(0,0,cv.width,cv.height);
-    for(var i=0;i<parts.length;i++){var p=parts[i];
-      p.y-=p.s; p.t+=0.02; if(p.y<-4){p.y=cv.height+4;p.x=Math.random()*cv.width;}
-      var a=0.35+0.35*Math.sin(p.t);
-      ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,6.283);
-      ctx.fillStyle='rgba('+p.h+','+a.toFixed(2)+')';ctx.fill();
+    for(var i=0;i<parts.length;i++){
+      var p=parts[i];
+      p.y-=p.s; p.t+=0.015; if(p.y<-4){p.y=cv.height+4;p.x=Math.random()*cv.width;}
+      ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,6.283);
+      ctx.fillStyle='rgba('+p.h+','+(0.28+0.28*Math.sin(p.t)).toFixed(2)+')';
+      ctx.fill();
     }
     raf=requestAnimationFrame(draw);
   }
-  var vis=true;
+  function start(){ if(!running){ running=true; raf=requestAnimationFrame(draw); } }
+  function stop(){ running=false; cancelAnimationFrame(raf); raf=0; }
   if('IntersectionObserver' in window){
-    new IntersectionObserver(function(es){vis=es[0].isIntersecting;
-      if(vis){raf=requestAnimationFrame(draw);}else{cancelAnimationFrame(raf);} },{threshold:0}).observe(sec);
+    new IntersectionObserver(function(es){
+      if(es[0].isIntersecting) start(); else stop();
+    },{threshold:0.05}).observe(sec);
   }
-  window.addEventListener('resize',size); size(); raf=requestAnimationFrame(draw);
+  var rt; window.addEventListener('resize',function(){ clearTimeout(rt); rt=setTimeout(size,150); },{passive:true});
+  size();
 })();
 </script>
 <script>
@@ -752,6 +804,24 @@
 })();
 </script>
 
+
+
+<script>
+(function(){
+  var hero=document.getElementById('hero');
+  if(!hero) return;
+  var motions=hero.querySelectorAll('animateMotion');
+  if(!motions.length) return;
+  function set(on){
+    motions.forEach(function(m){
+      try{ if(on){ if(m.beginElement) m.beginElement(); } else { if(m.endElement) m.endElement(); } }catch(e){}
+    });
+  }
+  if('IntersectionObserver' in window){
+    new IntersectionObserver(function(es){ set(es[0].isIntersecting); },{threshold:0.05}).observe(hero);
+  }
+})();
+</script>
 
 <script>
 (function(){
