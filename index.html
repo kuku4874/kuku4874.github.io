@@ -346,6 +346,12 @@
   .neon-bar{height:3px !important}
   /* hide the mobile dropdown on desktop (was showing stray links top-left) */
   @media(min-width:768px){.mobile-menu{display:none !important}}
+  /* ===== PERF: cheap cursor-reveal mask + promote blurred layers ===== */
+  .bg-reveal{
+    -webkit-mask-image:radial-gradient(circle 66px at var(--mx,-999px) var(--my,-999px),#000 40%,rgba(0,0,0,.4) 74%,transparent 100%) !important;
+    mask-image:radial-gradient(circle 66px at var(--mx,-999px) var(--my,-999px),#000 40%,rgba(0,0,0,.4) 74%,transparent 100%) !important}
+  .hf-bloom,.xp-aurora i,.w3-aurora i{will-change:transform}
+  .xp-stars{will-change:auto}
 
   /* ===== COOL FX ===== */
   .neon-bar-b{position:fixed;bottom:0;left:0;right:0;height:3px;z-index:65;pointer-events:none;
@@ -381,19 +387,6 @@
   .nav-link{position:relative}
   .nav-link:hover::after,.nav-link.active::after{transform:scaleX(1)}
   @media(prefers-reduced-motion:reduce){.neon-bar,.neon-bar-b,.hf-bloom,.hf-mote,.copy::before,.xp-card,.w3-card{animation:none}.hf-mote{opacity:.5}.copy h1{animation:none !important}}
-
-  .soc-wrap{position:relative}
-  .email-menu{position:absolute;left:50%;bottom:calc(100% + 10px);transform:translateX(-50%) translateY(6px) scale(.97);min-width:260px;display:flex;flex-direction:column;gap:4px;
-    background:rgba(8,12,22,.96);border:1px solid rgba(125,211,252,.35);border-radius:14px;padding:8px;
-    box-shadow:0 0 28px -6px rgba(56,189,248,.55),0 20px 40px -16px rgba(0,0,0,.85);
-    opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:80}
-  .soc-wrap.open .email-menu{opacity:1;transform:translateX(-50%) translateY(0) scale(1);pointer-events:auto}
-  .email-menu a{display:flex;flex-direction:column;gap:2px;padding:10px 12px;border-radius:10px;text-decoration:none;
-    color:#fff;font-family:'JetBrains Mono',monospace;transition:background .15s}
-  .email-menu a:hover{background:rgba(125,211,252,.14)}
-  .email-menu .em-label{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#7dd3fc}
-  .email-menu .em-addr{font-size:12.5px;color:rgba(255,255,255,.88);word-break:break-all}
-
 </style>
 </head>
 <body>
@@ -478,7 +471,7 @@
     <div class="i18n eyebrow hero-rise" style="animation-delay:.15s" data-zh="业务发展主管 · <i>HTX / Poloniex</i>" data-ko="사업 개발 총괄 · <i>HTX / Poloniex</i>">Head of Business Development · <i>HTX / Poloniex</i></div>
     <h1 class="hero-rise" style="animation-delay:.3s">Muhammad</h1>
     <p class="i18n hero-rise" style="animation-delay:.5s" data-zh="资深商务拓展负责人，5 年以上商业岗位经验，2 年以上在顶级交易所规模主导全球 Web3 合作——已达成 180+ 合作，公司全员 KPI 排名第一。" data-ko="5년 이상의 상업 경력과 2년 이상 최상위 거래소 규모의 글로벌 Web3 파트너십을 이끈 사업 개발 리더 — 180개 이상의 파트너십 체결, 전사 KPI 1위.">BD leader with 5+ years in commercial roles and 2+ years leading global Web3 partnerships at tier-one exchange scale — 180+ partnerships closed and ranked #1 on company-wide KPIs.</p>
-    <div class="socials hero-rise" id="contact" style="animation-delay:.7s"><a class="soc" href="https://www.linkedin.com/in/muhammad-9b4b77214" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="#0A66C2" xmlns="http://www.w3.org/2000/svg"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.852 3.37-1.852 3.601 0 4.267 2.37 4.267 5.455v6.288zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.225 0z"/></svg></a><div class="soc-wrap" id="emailWrap"><a class="soc" href="#" id="emailBtn" aria-label="Email" aria-haspopup="true" aria-expanded="false"><svg viewBox="0 0 24 24" fill="#ea4335" xmlns="http://www.w3.org/2000/svg"><path d="M2 6a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v.35l-10 5.6L2 6.35V6Zm0 2.64V18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8.64l-9.51 5.33a1 1 0 0 1-.98 0L2 8.64Z"/></svg></a><div class="email-menu" id="emailMenu" role="menu" aria-label="Email options"><a role="menuitem" href="mailto:muhammad@htx-inc.com"><span class="em-label">Official</span><span class="em-addr">muhammad@htx-inc.com</span></a><a role="menuitem" href="mailto:muhammadhuzaifa4874@gmail.com"><span class="em-label">Personal inquiries</span><span class="em-addr">muhammadhuzaifa4874@gmail.com</span></a></div></div><a class="soc" href="https://discord.com/users/fate_6996" target="_blank" rel="noopener" aria-label="Discord"><svg viewBox="0 0 24 24" fill="#5865F2" xmlns="http://www.w3.org/2000/svg"><path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189z"/></svg></a><div class="soc-wrap" id="tgWrap"><a class="soc" href="#" id="tgBtn" aria-label="Telegram" aria-haspopup="true" aria-expanded="false"><svg viewBox="0 0 24 24" fill="#229ED9" xmlns="http://www.w3.org/2000/svg"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg></a><div class="email-menu" id="tgMenu" role="menu" aria-label="Telegram options"><a role="menuitem" href="https://t.me/htx_faith" target="_blank" rel="noopener"><span class="em-label">Work</span><span class="em-addr">@htx_faith</span></a><a role="menuitem" href="https://t.me/kk40400" target="_blank" rel="noopener"><span class="em-label">Personal</span><span class="em-addr">@kk40400</span></a></div></div><a class="soc" href="https://github.com/kuku4874" target="_blank" rel="noopener" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="#181717" xmlns="http://www.w3.org/2000/svg"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222 0 1.606-.014 2.898-.014 3.293 0 .322.216.694.825.576C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a></div>
+    <div class="socials hero-rise" id="contact" style="animation-delay:.7s"><a class="soc" href="https://www.linkedin.com/in/muhammad-9b4b77214" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="#0A66C2" xmlns="http://www.w3.org/2000/svg"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.852 3.37-1.852 3.601 0 4.267 2.37 4.267 5.455v6.288zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.225 0z"/></svg></a><a class="soc" href="https://x.com/" target="_blank" rel="noopener" aria-label="X (Twitter)"><svg viewBox="0 0 24 24" fill="#000000" xmlns="http://www.w3.org/2000/svg"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a><a class="soc" href="https://discord.com/users/fate_6996" target="_blank" rel="noopener" aria-label="Discord"><svg viewBox="0 0 24 24" fill="#5865F2" xmlns="http://www.w3.org/2000/svg"><path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189z"/></svg></a><a class="soc" href="https://t.me/kk40400" target="_blank" rel="noopener" aria-label="Telegram"><svg viewBox="0 0 24 24" fill="#26A5E4" xmlns="http://www.w3.org/2000/svg"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.96 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg></a><a class="soc" href="https://github.com/kuku4874" target="_blank" rel="noopener" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="#181717" xmlns="http://www.w3.org/2000/svg"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222 0 1.606-.014 2.898-.014 3.293 0 .322.216.694.825.576C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a><a class="soc" href="mailto:muhammad@htx-inc.com" aria-label="Email"><svg viewBox="0 0 24 24" fill="#ea4335" xmlns="http://www.w3.org/2000/svg"><path d="M2 6a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v.35l-10 5.6L2 6.35V6Zm0 2.64V18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8.64l-9.51 5.33a1 1 0 0 1-.98 0L2 8.64Z"/></svg></a></div>
   </div>
 
 </section>
@@ -611,22 +604,10 @@
     gx+=(gtx-gx)*0.06;gy+=(gty-gy)*0.06;
     pattern.setAttribute('x',gx.toFixed(2));pattern.setAttribute('y',gy.toFixed(2));
 
-    // spotlight
+    // spotlight (CSS gradient mask — no per-frame canvas encoding)
     sx+=(mx-sx)*0.5;sy+=(my-sy)*0.5;
-    ctx.clearRect(0,0,canvas.width,canvas.height);
-    var R=66;
-    var g=ctx.createRadialGradient(sx,sy,0,sx,sy,R);
-    g.addColorStop(0,'rgba(255,255,255,1)');
-    g.addColorStop(0.4,'rgba(255,255,255,1)');
-    g.addColorStop(0.6,'rgba(255,255,255,0.75)');
-    g.addColorStop(0.75,'rgba(255,255,255,0.4)');
-    g.addColorStop(0.88,'rgba(255,255,255,0.12)');
-    g.addColorStop(1,'rgba(255,255,255,0)');
-    ctx.fillStyle=g;
-    ctx.beginPath();ctx.arc(sx,sy,R,0,Math.PI*2);ctx.fill();
-    var url=canvas.toDataURL();
-    reveal.style.webkitMaskImage='url('+url+')';
-    reveal.style.maskImage='url('+url+')';
+    reveal.style.setProperty('--mx', sx.toFixed(1)+'px');
+    reveal.style.setProperty('--my', sy.toFixed(1)+'px');
 
     rafId=requestAnimationFrame(frame);
   }
@@ -702,39 +683,5 @@
   document.addEventListener('click',function(){ root.classList.remove('open'); btn.setAttribute('aria-expanded',false); });
 })();
 </script>
-
-<script>
-(function(){
-  function wire(wrapId, btnId, menuId, otherWrapId, otherBtnId){
-    var wrap=document.getElementById(wrapId);
-    var btn=document.getElementById(btnId);
-    var menu=document.getElementById(menuId);
-    if(!wrap||!btn||!menu) return;
-    function setOpen(o){
-      wrap.classList.toggle('open',o);
-      btn.setAttribute('aria-expanded',String(o));
-    }
-    function closeOther(){
-      var ow=document.getElementById(otherWrapId);
-      if(!ow) return;
-      ow.classList.remove('open');
-      var ob=document.getElementById(otherBtnId);
-      if(ob) ob.setAttribute('aria-expanded','false');
-    }
-    btn.addEventListener('click',function(e){
-      e.preventDefault();
-      e.stopPropagation();
-      closeOther();
-      setOpen(!wrap.classList.contains('open'));
-    });
-    menu.addEventListener('click',function(e){ e.stopPropagation(); });
-    document.addEventListener('click',function(){ setOpen(false); });
-    document.addEventListener('keydown',function(e){ if(e.key==='Escape') setOpen(false); });
-  }
-  wire('emailWrap','emailBtn','emailMenu','tgWrap','tgBtn');
-  wire('tgWrap','tgBtn','tgMenu','emailWrap','emailBtn');
-})();
-</script>
-
 </body>
 </html>
