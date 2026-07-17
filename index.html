@@ -385,7 +385,7 @@
     background:radial-gradient(circle,rgba(249,150,60,.42),transparent 65%);animation:hfDrift2 23s ease-in-out infinite}
   @keyframes hfDrift1{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(42px,30px) scale(1.08)}}
   @keyframes hfDrift2{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-38px,-26px) scale(1.06)}}
-  .hf-mote{position:absolute;bottom:-3%;z-index:36;width:3px;height:3px;border-radius:50%;background:rgba(196,232,255,.95);
+  .hf-mote{display:none !important;position:absolute;bottom:-3%;z-index:36;width:3px;height:3px;border-radius:50%;background:rgba(196,232,255,.95);
     box-shadow:0 0 8px 2px rgba(125,211,252,.55);opacity:0;animation:hfRise 22s cubic-bezier(.33,.1,.25,1) infinite}
   .hf-mote.m1{left:16%;animation-delay:0s;animation-duration:24s}.hf-mote.m2{left:31%;animation-delay:3.2s;animation-duration:21s}
   .hf-mote.m3{left:47%;animation-delay:6.5s;animation-duration:23s}.hf-mote.m4{left:63%;animation-delay:9.8s;animation-duration:20s}
@@ -513,7 +513,7 @@
 
   <div class="bg-base"></div>
   <div class="bg-reveal" id="reveal"></div>
-  <div class="hero-fx"><span class="hf-bloom b1"></span><span class="hf-bloom b2"></span><span class="hf-mote m1"></span><span class="hf-mote m2"></span><span class="hf-mote m3"></span><span class="hf-mote m4"></span><span class="hf-mote m5"></span><span class="hf-mote m6"></span></div><div class="hero-vignette"></div>
+  <div class="hero-fx"><span class="hf-bloom b1"></span><span class="hf-bloom b2"></span></div><div class="hero-vignette"></div>
 
   <div class="stats">
     <svg viewBox="0 0 380 700" preserveAspectRatio="xMaxYMid meet" xmlns="http://www.w3.org/2000/svg">
