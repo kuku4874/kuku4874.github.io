@@ -208,7 +208,6 @@
     background-image:linear-gradient(#7c8aa5 1px,transparent 1px),linear-gradient(90deg,#7c8aa5 1px,transparent 1px);
     background-size:48px 48px;animation:xpPan 26s linear infinite}
   @keyframes xpPan{from{background-position:0 0,0 0}to{background-position:48px 48px,48px 48px}}
-  .xp-stars{position:absolute;inset:0;z-index:0;pointer-events:none}
   .xp-inner{position:relative;z-index:1;max-width:1100px;margin:0 auto}
   .xp-eyebrow{font-size:12px;font-weight:600;letter-spacing:.12em;color:rgba(255,255,255,.7);text-transform:uppercase}
   .xp-eyebrow i{font-style:italic;color:#22d3ee}
@@ -434,7 +433,7 @@
   .xp-stat,.xp-card,.w3-card{backdrop-filter:none !important;-webkit-backdrop-filter:none !important}
   @media (max-width:767px){
     /* keep dual Email/TG + planets; only drop harsh phone overlays */
-    .hf-bloom,.xp-stars,.xp-aurora,.w3-aurora,.w3-spark,.bg-reveal{display:none !important}
+    .hf-bloom,.xp-aurora,.w3-aurora,.w3-spark,.bg-reveal{display:none !important}
     .xp-aurora,.w3-aurora{filter:none !important}
     /* readable hero text over orange jacket */
     .hero-vignette{background:linear-gradient(to top,rgba(5,7,14,.88),rgba(5,7,14,.42) 36%,transparent 62%) !important}
@@ -588,8 +587,7 @@
 <section class="xp" id="experience">
   <div class="xp-aurora"><i></i><i></i><i></i></div>
   <div class="xp-grid-bg"></div>
-  <canvas class="xp-stars" id="xpStars"></canvas>
-  <div class="xp-inner">
+<div class="xp-inner">
     <div class="xp-head">
       <div class="i18n xp-eyebrow" data-zh="职业 <i>历程</i>" data-ko="경력 <i>타임라인</i>">Career <i>timeline</i></div>
       <h2 class="i18n xp-title" data-zh="工作经历" data-ko="경력">Experience</h2>
@@ -745,7 +743,6 @@
       if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.16});
     cards.forEach(function(c){io.observe(c);});
   } else { cards.forEach(function(c){c.classList.add('in');}); }
-
   var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var mobile=window.matchMedia&&window.matchMedia('(max-width:767px)').matches;
   cards.forEach(function(c){
@@ -756,46 +753,6 @@
       c.style.setProperty('--my',((e.clientY-r.top)/r.height*100)+'%');
     },{passive:true});
   });
-
-  var cv=document.getElementById('xpStars'); if(!cv||reduce||mobile) {
-    if(cv) cv.style.display='none';
-    return;
-  }
-  var ctx=cv.getContext('2d',{alpha:true}), sec=document.getElementById('experience'), parts=[], raf=0, running=false;
-  if(!sec) return;
-  function size(){
-    var w=sec.clientWidth, h=sec.clientHeight;
-    if(cv.width!==w) cv.width=w;
-    if(cv.height!==h) cv.height=h;
-    build();
-  }
-  function build(){
-    parts=[]; var n=Math.min(22, Math.max(8, Math.round(cv.width*cv.height/90000)));
-    for(var i=0;i<n;i++) parts.push({x:Math.random()*cv.width,y:Math.random()*cv.height,
-      r:Math.random()*1.4+.3,s:Math.random()*.2+.04,t:Math.random()*6.28,
-      h:Math.random()<.5?'52,211,153':'34,211,238'});
-  }
-  function draw(){
-    if(!running) return;
-    ctx.clearRect(0,0,cv.width,cv.height);
-    for(var i=0;i<parts.length;i++){
-      var p=parts[i];
-      p.y-=p.s; p.t+=0.015; if(p.y<-4){p.y=cv.height+4;p.x=Math.random()*cv.width;}
-      ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,6.283);
-      ctx.fillStyle='rgba('+p.h+','+(0.28+0.28*Math.sin(p.t)).toFixed(2)+')';
-      ctx.fill();
-    }
-    raf=requestAnimationFrame(draw);
-  }
-  function start(){ if(!running){ running=true; raf=requestAnimationFrame(draw); } }
-  function stop(){ running=false; cancelAnimationFrame(raf); raf=0; }
-  if('IntersectionObserver' in window){
-    new IntersectionObserver(function(es){
-      if(es[0].isIntersecting) start(); else stop();
-    },{threshold:0.05}).observe(sec);
-  }
-  var rt; window.addEventListener('resize',function(){ clearTimeout(rt); rt=setTimeout(size,150); },{passive:true});
-  size();
 })();
 </script>
 <script>
