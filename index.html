@@ -341,7 +341,7 @@
   .soc{box-shadow:0 0 14px -4px rgba(125,211,252,.55),0 10px 22px -8px rgba(0,0,0,.45)}
 
 /* ===== NAME NEON (on inner span so hero-rise opacity works) ===== */
-  .copy h1{animation:none !important;text-shadow:none !important;color:#fff !important}
+  .copy h1{text-shadow:none !important;color:#fff !important}
   .neon-name{
     color:#fff;
     text-shadow:0 0 6px #cfeeff,0 0 16px #5cd6ff,0 0 34px #3b82f6,0 0 64px #3b82f6;
@@ -447,7 +447,7 @@
     /* readable hero text over orange jacket */
     .hero-vignette{background:linear-gradient(to top,rgba(5,7,14,.88),rgba(5,7,14,.42) 36%,transparent 62%) !important}
     .copy{bottom:40px;left:18px;max-width:min(320px,calc(100vw - 36px));z-index:55}
-    .copy h1{animation:heroRise .95s cubic-bezier(.22,1,.36,1) .3s forwards !important;opacity:0}
+    .copy h1{opacity:1 !important;animation:none !important;filter:none !important;transform:none !important}
     .neon-name{text-shadow:0 0 6px #cfeeff,0 0 16px #5cd6ff,0 0 34px #3b82f6,0 2px 14px rgba(0,0,0,.75) !important}
     .copy .eyebrow{text-shadow:0 1px 10px rgba(0,0,0,.75) !important;color:#e5e7eb !important}
     .copy p{color:#f1f5f9 !important;text-shadow:0 1px 10px rgba(0,0,0,.7)}
@@ -466,6 +466,11 @@
   }
   .copy h1.hero-rise{color:#fff}
   .copy h1.hero-rise.neon-ready,.copy h1 .neon-name{visibility:visible}
+
+  /* hard guarantee: name always readable */
+  .copy h1, .copy h1 .neon-name{color:#fff !important}
+  .copy h1.hero-rise{animation:heroRise .95s cubic-bezier(.22,1,.36,1) forwards}
+  .copy h1 .neon-name{opacity:1}
 </style>
 </head>
 <body>
@@ -917,5 +922,14 @@
 })();
 </script>
 
+<script>
+(function(){
+  var h=document.querySelector('.copy h1');
+  if(!h) return;
+  function show(){ h.style.opacity='1'; h.style.filter='none'; h.style.transform='none'; }
+  setTimeout(show, 1200);
+  h.addEventListener('animationend', show);
+})();
+</script>
 </body>
 </html>
