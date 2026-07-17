@@ -432,7 +432,7 @@
   .xp-card,.w3-card{animation:none !important}
   .neon-bar,.neon-bar-b{animation:none !important;background-position:0 0 !important}
   .hf-bloom{animation:none !important}
-  .hf-mote{animation:none !important;opacity:.35}
+  .hf-mote{animation:hfRise 15s linear infinite !important}
   .copy::before{animation:none !important}
   .xp-grid-bg{animation:none !important}
   .w3-title{animation:none !important}
@@ -442,7 +442,7 @@
   .xp-stat,.xp-card,.w3-card{backdrop-filter:none !important;-webkit-backdrop-filter:none !important}
   @media (max-width:767px){
     /* keep dual Email/TG + planets; only drop harsh phone overlays */
-    .hf-bloom,.hf-mote,.xp-stars,.xp-aurora,.w3-aurora,.w3-spark,.bg-reveal{display:none !important}
+    .hf-bloom,.xp-stars,.xp-aurora,.w3-aurora,.w3-spark,.bg-reveal{display:none !important}
     .xp-aurora,.w3-aurora{filter:none !important}
     /* readable hero text over orange jacket */
     .hero-vignette{background:linear-gradient(to top,rgba(5,7,14,.88),rgba(5,7,14,.42) 36%,transparent 62%) !important}
@@ -511,7 +511,7 @@
 
   <div class="bg-base"></div>
   <div class="bg-reveal" id="reveal"></div>
-  <div class="hero-fx"><span class="hf-bloom b1"></span><span class="hf-bloom b2"></span></div><div class="hero-vignette"></div>
+  <div class="hero-fx"><span class="hf-bloom b1"></span><span class="hf-bloom b2"></span><span class="hf-mote m1"></span><span class="hf-mote m2"></span><span class="hf-mote m3"></span><span class="hf-mote m4"></span><span class="hf-mote m5"></span><span class="hf-mote m6"></span></div><div class="hero-vignette"></div>
 
   <div class="stats">
     <svg viewBox="0 0 380 700" preserveAspectRatio="xMaxYMid meet" xmlns="http://www.w3.org/2000/svg">
